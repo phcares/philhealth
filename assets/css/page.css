@@ -1,0 +1,27 @@
+#pageloader{
+	background: #4caf50;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	z-index: 800;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.login-cover{
+	background: #43a047;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	z-index: 800;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.modal.bottom-sheet{
+	max-height: 95%;
+}

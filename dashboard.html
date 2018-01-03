@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <!--Import Google Icon Font-->
+	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	  <!--Import materialize.css-->
+  	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  	  <link rel="stylesheet" href="assets/css/page.css">
+  	  <link rel="stylesheet" href="assets/css/datatables.min.css">
+  	  <link rel="stylesheet" href="assets/css/responsive.dataTables.min.css">
+	  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+  	  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+		<script>
+		  // Initialize Firebase
+		  var config = {
+		    apiKey: "AIzaSyCL-toM_ARHS6hTHnI91-J6QWIoxHrVj7A",
+		    authDomain: "phcares-fbd2b.firebaseapp.com",
+		    databaseURL: "https://phcares-fbd2b.firebaseio.com",
+		    projectId: "phcares-fbd2b",
+		    storageBucket: "phcares-fbd2b.appspot.com",
+		    messagingSenderId: "455909107444"
+		  };
+		  firebase.initializeApp(config);
+		  var secondaryApp = firebase.initializeApp(config, "Secondary");
+		</script>
+		<title>Philhealth | Dashboard </title>
+	  <!--Let browser know website is optimized for mobile-->
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	</head>
+	<body>
+		<input type="hidden" id="user_fullname">
+		<div id="pageloader">
+			<div class="preloader-wrapper big active">
+		      <div class="spinner-layer spinner-blue">
+		        <div class="circle-clipper left">
+		          <div class="circle"></div>
+		        </div><div class="gap-patch">
+		          <div class="circle"></div>
+		        </div><div class="circle-clipper right">
+		          <div class="circle"></div>
+		        </div>
+		      </div>
+
+		      <div class="spinner-layer spinner-red">
+		        <div class="circle-clipper left">
+		          <div class="circle"></div>
+		        </div><div class="gap-patch">
+		          <div class="circle"></div>
+		        </div><div class="circle-clipper right">
+		          <div class="circle"></div>
+		        </div>
+		      </div>
+
+		      <div class="spinner-layer spinner-yellow">
+		        <div class="circle-clipper left">
+		          <div class="circle"></div>
+		        </div><div class="gap-patch">
+		          <div class="circle"></div>
+		        </div><div class="circle-clipper right">
+		          <div class="circle"></div>
+		        </div>
+		      </div>
+
+		      <div class="spinner-layer spinner-green">
+		        <div class="circle-clipper left">
+		          <div class="circle"></div>
+		        </div><div class="gap-patch">
+		          <div class="circle"></div>
+		        </div><div class="circle-clipper right">
+		          <div class="circle"></div>
+		        </div>
+		      </div>
+		    </div>
+		</div>
+	    <ul class="side-nav" id="mobile-demo">
+	        <li><a href="dashboard.html">Home</a></li>
+	        <li><a href="#myAccount" class="modal-trigger myAccountBtn">My Account</a></li>
+	        <li><a href="#" class="signOutBtn">Sign Out</a></li>
+	    </ul>
+		<div class="navbar-fixed">
+		    <nav class="green nav-extended">
+		      <div class="nav-wrapper">
+		        <a href="dashboard.html" class="brand-logo"><img src="assets/img/logo2.png" alt="" height="65px"></a>
+		        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+		        <ul id="nav-mobile" class="right hide-on-med-and-down">
+			        <li><a href="dashboard.html">Home</a></li>
+			        <li><a href="#myAccount" class="modal-trigger myAccountBtn">My Account</a></li>
+			        <li><a href="#" class="signOutBtn">Sign Out</a></li>
+			    </ul>
+		      </div>
+		        <div class="nav-content">
+			      <ul class="tabs tabs-transparent">
+			        <li class="tab"><a class="active" href="#userMaintenance">User Maintenance</a></li>
+			        <li class="tab"><a href="#caresMaintenance">Cares Maintenance</a></li>
+			        <li class="tab"><a href="#reports">Reports</a></li>
+			        <li class="tab"><a href="#logs">Logs</a></li>
+			        <li class="tab"><a href="#archive">Archive</a></li>
+			      </ul>
+			    </div>
+		    </nav>
+		</div>
+	    <div id="userMaintenance">
+	    	<div class="container">
+	    		<div class="row">
+	    			<div class="col s12">
+	    				<br><br><br>
+	    				<button class="btn green modal-trigger" data-target="addNewAdmin"><i class="material-icons left">contacts</i>Add New Administrator Account</button>
+	    				<br><br>
+	    				<table class="bordered display compact hover nowrap" id="userMaintenanceTable" width="100%">
+	    					<thead>
+	    						<tr>
+	    							<th>Employee Number</th>
+	    							<th>Full Name</th>
+	    							<th>Email</th>
+	    						</tr>
+	    					</thead>
+	    					<tbody id="userListing">
+	    						
+	    					</tbody>
+	    				</table>
+	    				
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div id="caresMaintenance">
+	    	<div class="container">
+	    		<div class="row">
+	    			<div class="col s12">
+	    				<br><br><br>
+	    				<button class="btn green modal-trigger" data-target="addNewCares"><i class="material-icons left">contacts</i>Add New CARES Account</button>
+	    				<br><br>
+	    				<table class="bordered display compact hover nowrap" id="caresMaintenanceTable" width="100%">
+	    					<thead>
+	    						<tr>
+	    							<th>Employee Number</th>
+	    							<th>Full Name</th>
+	    							<th>Email</th>
+	    							<th>Contact No.</th>
+	    							<th>Status</th>
+	    						</tr>
+	    					</thead>
+	    					<tbody id="caresListing"></tbody>
+	    				</table>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div id="reports">
+	    	<div class="container">
+	    		<div class="row">
+	    			<div class="col s12">
+	    				<br><br><br>
+	    				<h5 class="flowtext">This Page is Under Maintenance.</h5>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div id="logs">
+	    	<div class="container">
+	    		<div class="row">
+	    			<div class="col s12">
+	    				<br><br><br>
+	    				<table class="compact bordered display nowrap" id="logsTable" width="100%">
+	    					<thead>
+	    						<tr>
+	    							<th>Employee</th>
+	    							<th>Activity</th>
+	    							<th>Timestamp</th>
+	    						</tr>
+	    					</thead>
+	    					<tbody id="logsListing">
+	    					</tbody>
+	    				</table>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+
+	    <div id="archive">
+	    	<div class="container">
+	    		<div class="row">
+	    			<div class="col s12">
+	    				<br><br><br>
+
+	    				<h4 class="flow-text">Archived Admin Accounts</h4>
+	    				<div class="archivedUsersAccounts">
+		    				<table class="compact bordered display nowrap" width="100%" id="archivedUsersAccountsTable">
+		    					<thead>
+		    						<tr>
+		    							<th>Employee #</th>
+		    							<th>Full Name</th>
+		    							<th>Email</th>
+		    						</tr>
+		    					</thead>
+		    					<tbody id="archivedAdminListing">
+		    						
+		    					</tbody>
+		    				</table>
+	    				</div>
+		    			<br><br><br>
+		    			<h4 class="flow-text">Archived CARES Accounts</h4>
+		    			<div class="archivedCareAccounts">
+		    				<table class="compact bordered display nowrap" width="100%" id="archivedCareAccountsTable">
+		    					<thead>
+		    						<tr>
+		    							<th>Employee #</th>
+		    							<th>Full Name</th>
+		    							<th>Email</th>
+		    						</tr>
+		    					</thead>
+		    					<tbody id="archivedCaresListing">
+		    					</tbody>
+		    				</table>
+		    			</div>
+		    				
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+		<!-- Modals -->
+		<div id="deleteUserModal" class="modal">
+		    <div class="modal-content">
+		      <h4>Delete User</h4>
+		      <p>Are you sure you want to delete this User Account?</p>
+		    </div>
+		    <div class="modal-footer">
+		    	<input type="hidden" id="userID">
+		      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+		      <a href="#!" class="modal-action waves-effect waves-green btn red deleteAdminSure">Delete</a>
+		    </div>
+		</div>
+
+		<div id="updateAdminModal" class="modal bottom-sheet">
+		    <div class="modal-content">
+		      <h4 class="flow-text">Update User</h4>
+		      <div class="row">
+		      	<div class="col s12 m6 l6 input-field">
+		      		<input type="hidden" id="updateAdminID">
+		      		<input type="text" class="validate" id="updateAdminEmail" readonly placeholder="" required="">
+					<label for="updateAdminEmail">Email Address</label>
+		      	</div>
+		      	<div class="col s12 m6 l6 input-field">
+		      		<input type="text" class="validate" id="updateAdminEmployeeNumber" placeholder="" required="">
+					<label for="updateAdminEmployeeNumber">Employee Number</label>
+		      	</div>
+		      	<div class="col s12 m4 l4 input-field">
+		      		<input type="text" class="validate" id="updateAdminFirstName" placeholder="" required="">
+					<label for="updateAdminFirstName">First Name</label>
+		      	</div>
+		      	<div class="col s12 m4 l4 input-field">
+		      		<input type="text" class="validate" id="updateAdminLastName" placeholder="" required="">
+					<label for="updateAdminLastName">Last Name</label>
+		      	</div>
+		      	<div class="col s12 m4 l4 input-field">
+		      		<input type="text" class="validate" id="updateAdminMiddleInitial" placeholder="" required="">
+					<label for="updateAdminMiddleInitial">Middle Initial</label>
+		      	</div>
+		      	<div class="col s12 m6 l6 input-field">
+		      		<select id="updateAdminStatus">
+					    <option value="Active">Active</option>
+					    <option value="Archive">Archived</option>
+					</select>
+					<label for="updateAdminStatus">Status</label>
+		      	</div>
+		      </div>
+		    </div>
+		    <div class="modal-footer">
+		      <a href="#deleteUserModal" class="modal-trigger waves-effect waves-green btn red left deleteAdminBtn">Delete</a>
+		      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+		      <a href="#!" class="modal-action waves-effect waves-green btn blue updateAdminBtn">Update</a>
+		    </div>
+		</div>
+
+		<!-- <div id="timeReportModal" class="modal bottom-sheet ">
+		    <div class="modal-content">
+			
+			<ul class="collection with-header">
+		        <li class="collection-header"><h4>Time Record Report</h4></li>
+		        <li class="collection-item">Date: <span class="right">12-26-2017</span></li>
+		        <li class="collection-item">Time In: <span class="right">08:01:26</span></li>
+		        <li class="collection-item">Time Out: <span class="right">12:03:35</span></li>
+		        <li class="collection-item">Time In: <span class="right">13:03:58</span></li>
+		        <li class="collection-item">Time Out: <span class="right">17:05:49</span></li>
+		        <li class="collection-item">OT In: <span class="right">--:--:--</span></li>
+		        <li class="collection-item">OT Out: <span class="right">--:--:--</span></li>
+		        <li class="collection-item">Location: <span class="right">Marilao, Bulacan</span></li>
+		    </ul>
+		    </div>
+		    <div class="modal-footer">
+		      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+		      <a href="#!" class="modal-action waves-effect waves-green btn green"><i class="material-icons left">print</i>Print</a>
+		    </div>
+		</div> -->
+
+		<div id="addNewAdmin" class="modal bottom-sheet">
+			<form id="addNewAdminForm">
+		    <div class="modal-content">
+		    	<h4 class="flow-text">New Administrator Account</h4>
+		    	<div class="row">
+		    		<div class="col s12 input-field">
+		    			<input type="text" class="validate" id="adminEmployeeNumber">
+		    			<label for="adminEmployeeNumber">Employee Number</label>
+		    		</div>
+		    		<div class="col s12 m4 l4 input-field">
+		    			<input type="text" class="validate" id="adminFirstName">
+		    			<label for="adminFirstName">First Name</label>
+		    		</div>
+		    		<div class="col s12 m4 l4 input-field">
+		    			<input type="text" class="validate" id="adminLastName">
+		    			<label for="adminLastName">Last Name</label>
+		    		</div>
+		    		<div class="col s12 m4 l4 input-field">
+		    			<input type="text" class="validate" id="adminMiddleInitial">
+		    			<label for="adminMiddleInitial">Middle Initial</label>
+		    		</div>
+		    		<div class="col s12 m4 l4 input-field">
+		    			<input type="text" class="validate" id="adminEmail">
+		    			<label for="adminEmail">Email</label>
+		    		</div>
+		    		<div class="col s12 m4 l4 input-field">
+		    			<input type="password" class="validate" id="adminPassword">
+		    			<label for="adminPassword">Password</label>
+		    		</div>
+		    		<div class="col s12 m4 l4 input-field">
+		    			<input type="password" class="validate" id="adminCPassword">
+		    			<label for="adminCPassword">Confirm Password</label>
+		    		</div>
+		    	</div>
+		    	<p id="addErrorMsg" class="hide red-text"></p>
+		    </div>
+		    <div class="modal-footer">
+		      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+		      <a href="#!" class="modal-action waves-effect waves-green btn green addAdminBtn disabled"><i class="material-icons right">send</i>Submit</a>
+		    </div>
+		    </form>
+		</div>
+
+		<div id="addNewCares" class="modal bottom-sheet">
+			<form id="addCaresForm">
+		    <div class="modal-content">
+		    	<h4 class="flow-text">New Cares Account</h4>
+		    	<div class="row">
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="caresEmployeeNumber">
+		    			<label for="caresEmployeeNumber">Employee Number</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="caresFirstName">
+		    			<label for="caresFirstName">First Name</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="caresLastName">
+		    			<label for="caresLastName">Last Name</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="caresMiddleInitial">
+		    			<label for="caresMiddleInitial">Middle Initial</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="caresContact">
+		    			<label for="caresContact">Contact No</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="caresEmail">
+		    			<label for="caresEmail">Email</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="password" class="validate" id="caresPassword">
+		    			<label for="caresPassword">Password</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="password" class="validate" id="caresCPassword">
+		    			<label for="caresCPassword">Confirm Password</label>
+		    		</div>
+		    	</div>
+		    	<p class="red-text hide" id="addCareErrorMsg"></p>
+		    </div>
+		    <div class="modal-footer">
+		      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+		      <a href="#!" class="modal-action waves-effect waves-green btn green disabled addCaresBtn"><i class="material-icons right">send</i>Submit</a>
+		    </div>
+			</form>
+		</div>
+		<div id="updateCaresModal" class="modal bottom-sheet">
+			<form id="updateCaresForm">
+		    <div class="modal-content">
+		    	<h4 class="flow-text">Update Cares Account</h4>
+		    	<div class="row">
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="hidden" id="caresID">
+		    			<input type="text" class="validate" id="updateCaresEmployeeNumber" placeholder="">
+		    			<label for="updateCaresEmployeeNumber">Employee Number</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="updateCaresFirstName" placeholder="">
+		    			<label for="updateCaresFirstName">First Name</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="updateCaresLastName" placeholder="">
+		    			<label for="updateCaresLastName">Last Name</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="updateCaresMiddleInitial" placeholder="">
+		    			<label for="updateCaresMiddleInitial">Middle Initial</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="updateCaresContact" placeholder="">
+		    			<label for="updateCaresContact">Contact No</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="updateCaresEmail" placeholder="" readonly>
+		    			<label for="updateCaresEmail">Email</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="password" class="validate" id="updateCaresPassword" placeholder="(unchanged)">
+		    			<label for="updateCaresPassword">Password</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="password" class="validate" id="updateCaresCPassword" placeholder="">
+		    			<label for="updateCaresCPassword">Confirm Password</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<select id="updateCareStatus">
+					      <option value="Active">Active</option>
+					      <option value="Archive">Archived</option>
+					    </select>
+		    			<label for="updateCareStatus">Status</label>
+		    		</div>
+		    	</div>
+		    	<p class="red-text hide" id="updateCaresErrorMsg"></p>
+		    </div>
+		    <div class="modal-footer">
+		      <a href="#deleteUserModal" class="modal-trigger waves-effect waves-green btn left red deleteCaresBtn">Delete</a>
+		      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+		      <a href="#!" class="modal-action waves-effect waves-green btn green disabled updateCaresBtn"><i class="material-icons right">send</i>Update</a>
+		    </div>
+			</form>
+		</div>
+
+		<div id="archiveAdminModal" class="modal bottom-sheet">
+			<form id="updateArchiveAdminForm">
+		    <div class="modal-content">
+		    	<h4 class="flow-text">Update Admin Account</h4>
+		    	<div class="row">
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="hidden" id="archiveAdminID">
+		    			<input type="text" class="validate" id="archiveAdminEmployeeNumber" placeholder="" readonly>
+		    			<label for="archiveAdminEmployeeNumber">Employee Number</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="archiveAdminFirstName" placeholder="" readonly>
+		    			<label for="archiveAdminFirstName">First Name</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="archiveAdminLastName" placeholder="" readonly>
+		    			<label for="archiveAdminLastName">Last Name</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="archiveAdminMiddleInitial" placeholder="" readonly>
+		    			<label for="archiveAdminMiddleInitial">Middle Initial</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="archiveAdminEmail" placeholder="" readonly>
+		    			<label for="archiveAdminEmail">Email</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<select id="archiveAdminStatus">
+					      <option value="Archive">Archived</option>
+					      <option value="Active">Active</option>
+					    </select>
+		    			<label for="archiveAdminStatus">Status</label>
+		    		</div>
+		    	</div>
+		    </div>
+		    <div class="modal-footer">
+		      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+		      <a href="#!" class="modal-action waves-effect waves-green btn green removeArchiveAdminBtn"><i class="material-icons right">send</i>Update</a>
+		    </div>
+			</form>
+		</div>
+
+		<div id="archiveCaresModal" class="modal bottom-sheet">
+			<form id="archiveCaresModalForm">
+		    <div class="modal-content">
+		    	<h4 class="flow-text">Update Cares Account</h4>
+		    	<div class="row">
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="hidden" id="archiveCaresID">
+		    			<input type="text" class="validate" id="archiveCaresEmployeeNumber" placeholder="" readonly>
+		    			<label for="archiveCaresEmployeeNumber">Employee Number</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="archiveCaresFirstName" placeholder="" readonly>
+		    			<label for="archiveCaresFirstName">First Name</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="archiveCaresLastName" placeholder="" readonly>
+		    			<label for="archiveCaresLastName">Last Name</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="archiveCaresMiddleInitial" placeholder="" readonly>
+		    			<label for="archiveCaresMiddleInitial">Middle Initial</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<input type="text" class="validate" id="archiveCaresEmail" placeholder="" readonly>
+		    			<label for="archiveCaresEmail">Email</label>
+		    		</div>
+		    		<div class="col s12 m3 l3 input-field">
+		    			<select id="archiveCaresStatus">
+					      <option value="Archive">Archived</option>
+					      <option value="Active">Active</option>
+					    </select>
+		    			<label for="archiveCaresStatus">Status</label>
+		    		</div>
+		    	</div>
+		    </div>
+		    <div class="modal-footer">
+		      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+		      <a href="#!" class="modal-action waves-effect waves-green btn green removeArchiveCaresBtn"><i class="material-icons right">send</i>Update</a>
+		    </div>
+			</form>
+		</div>
+
+		<div id="myAccount" class="modal bottom-sheet">
+		    <div class="modal-content">
+		      <h4 class="flow-text">Account Info</h4>
+		      <div class="row">
+		      	<div class="col s12 input-field">
+		      		<input type="hidden" id="myAccountID">
+		      		<input type="text" class="validate" id="myAccountEmail" readonly placeholder="" required="">
+					<label for="myAccountEmail">Email Address</label>
+		      	</div>
+		      	<div class="col s12 input-field">
+		      		<input type="password" class="validate" id="myAccountPassword" placeholder="(unchanged)" required="">
+					<label for="myAccountPassword">Password</label>
+		      	</div>
+		      	<div class="col s12 input-field">
+		      		<input type="password" class="validate" id="myAccountCPassword" placeholder="" required="">
+					<label for="myAccountCPassword">Confirm Password</label>
+		      	</div>
+		      </div>
+		      <p id="myAccountErrorMsg" class="red-text hide">Password should be atleast 6 characters.</p>
+		    </div>
+		    <div class="modal-footer">
+		      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+		      <a href="#!" class="modal-action waves-effect waves-green btn blue disabled updateMyAccountBtn">Update</a>
+		    </div>
+		</div>
+
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+	    <script src="assets/js/datatables.min.js"></script>
+	    <script src="assets/js/dataTables.responsive.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/1.5.1/fingerprint2.min.js"></script>
+	    <script>
+	    	$(window).on('load', function(){
+			 //PAGE IS FULLY LOADED 
+			 //FADE OUT YOUR OVERLAYING DIV
+			 $('#pageloader').fadeOut();
+			});
+	    </script>
+	    <script src="assets/js/page.js"></script>
+	</body>
+</html>
