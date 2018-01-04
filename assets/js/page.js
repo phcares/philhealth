@@ -5,6 +5,7 @@ $(".button-collapse").sideNav();
     getAllLogs();
     getAllArchivedAdmins();
     getAllArchivedCares();
+    getAllUserReports();
     $('#reportsTable').DataTable();
     $('.modal').modal();
     $('select').material_select();
@@ -664,3 +665,35 @@ $(document).on('click', '.updateMyAccountBtn', function (event) {
     $('#myAccount').modal('close');
   });
 });
+
+
+function getAllUserReports(){
+  db.collection('users').where("account_type", "==", "Cares").where("status", "==", "Active").onSnapshot(function(snapshot) {
+        snapshot.docChanges.forEach(function(change) {
+            if (change.type === "added") {
+                var currentUser = '<tr id="'+ change.doc.id +'"><td><a href="#reportCaresModal" class="modal-trigger" id="reportCaresModalBtn" key="'
+                        + change.doc.id +'">' + change.doc.data().emp_no + '</td><td>' 
+                        + change.doc.data().first_name + ' ' + change.doc.data().middle_initial + ' ' + change.doc.data().last_name + '</td><td>'+ change.doc.data().email +'</td></tr>';
+            $('#caresReportsListing').append(currentUser);
+            }
+            if (change.type === "modified") {
+                $('tr#' + change.doc.id).remove();
+              var currentUser = '<tr id="'+ change.doc.id +'"><td><a href="#reportCaresModal" class="modal-trigger" id="reportCaresModalBtn" key="'
+                        + change.doc.id +'">' + change.doc.data().emp_no + '</td><td>' 
+                        + change.doc.data().first_name + ' ' + change.doc.data().middle_initial + ' ' + change.doc.data().last_name + '</td><td>'+ change.doc.data().email +'</td></tr>';
+            $('#caresReportsListing').append(currentUser);
+            }
+            if (change.type === "removed") {
+                $('tr#' + change.doc.id).remove();
+            }
+        });
+          $('#caresReportsTable').DataTable({
+            responsive: true,
+            "bLengthChange": false
+          });
+
+          $.fn.dataTable.ext.errMode = 'none';
+
+        $('#caresReportsTable').on( 'error.dt', function ( e, settings, techNote, message ) { } ) ;
+ });
+}
