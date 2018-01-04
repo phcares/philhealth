@@ -15,7 +15,7 @@ $(".button-collapse").sideNav();
         closeOnSelect: false, // Close upon selecting a date,
         formatSubmit: 'dd/mm/yyyy',
         onClose: function() {
-            console.log(this.get('select', 'yyyy-mm-dd'));
+            console.log(this.get('select', 'd-m-yyyy'));
         }
       });
     $('.modal').modal();
