@@ -21,6 +21,16 @@ $(".button-collapse").sideNav();
       });
     $('.modal').modal();
     $('select').material_select();
+    $('#reportCaresModal').modal({
+        complete: function() { 
+            alert('Closed'); 
+            $('#reportEmail').val('');
+            $('#reportDate').val('');
+            $('.reportErrorMessage').addClass('hide');
+            $('.with-header').addClass('hide');
+            $('.reportPrintBtn').addClass('disabled');
+        }
+    });
 } );
 
 // new Fingerprint2().get(function(result, components){
@@ -732,6 +742,7 @@ function getReportByDate(date){
         snapshot.docChanges.forEach(function(change) {
             $('.with-header').removeClass('hide');
             $('.reportErrorMessage').addClass('hide');
+            $('.reportPrintBtn').removeClass('disabled');
           if (change.type === "added") {
                 $('.reportDate').html(date);
                 $('.reportTimeIn1').text(change.doc.data().timeIn1);
