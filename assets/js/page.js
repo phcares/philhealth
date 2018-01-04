@@ -729,6 +729,13 @@ $(document).on('click', '#reportCaresModalBtn', function (event) {
 
 function getReportByDate(date){
   var email = $('#reportEmail').val();
+    $('.reportTimeIn1').text('');
+    $('.reportTimeOut1').text('');
+    $('.reportTimeIn2').text('');
+    $('.reportTimeOut2').text('');
+    $('.reportOverTimeIn').text('');
+    $('.reportOverTimeOut').text('');
+    $('.reportPlace').text('');
 
   var docRef = db.collection('timeRecords');
   docRef.where("user_email", "==", email).where("date", "==", date)
