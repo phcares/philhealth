@@ -729,7 +729,7 @@ function getReportByDate(date){
               $('.reportErrorMessage').removeClass('hide');
           }
         snapshot.docChanges.forEach(function(change) {
-                  $('.with-header).removeClass('hide');
+                  $('.with-header').removeClass('hide');
           if (change.type === "added") {
                 $('.reportDate').html(date);
                 $('.reportTimeIn1').text(change.doc.data().timeIn1);
