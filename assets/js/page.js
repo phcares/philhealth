@@ -666,13 +666,12 @@ $(document).on('click', '.updateMyAccountBtn', function (event) {
   });
 });
 
-
 function getAllUserReports(){
   db.collection('users').where("account_type", "==", "Cares").where("status", "==", "Active").onSnapshot(function(snapshot) {
         snapshot.docChanges.forEach(function(change) {
             if (change.type === "added") {
                 var currentUser = '<tr id="'+ change.doc.id +'"><td><a href="#reportCaresModal" class="modal-trigger" id="reportCaresModalBtn" key="'
-                        + change.doc.id +'">' + change.doc.data().emp_no + '</td><td>' 
+                        + change.doc.id +'" name="' + change.doc.data().first_name + ' ' + change.doc.data().middle_initial + ' ' + change.doc.data().last_name + '">' + change.doc.data().emp_no + '</td><td>' 
                         + change.doc.data().first_name + ' ' + change.doc.data().middle_initial + ' ' + change.doc.data().last_name + '</td><td>'+ change.doc.data().email +'</td></tr>';
             $('#caresReportsListing').append(currentUser);
             }
@@ -697,3 +696,10 @@ function getAllUserReports(){
         $('#caresReportsTable').on( 'error.dt', function ( e, settings, techNote, message ) { } ) ;
  });
 }
+
+$(document).on('click', '#reportCaresModalBtn', function (event) {
+  event.preventDefault();
+  var name = $(this).attr("name");
+  var key = $(this).attr("key");
+  $('.reportCaresName').text(name);
+});
