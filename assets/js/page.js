@@ -727,9 +727,11 @@ function getReportByDate(date){
           if(snapshot.empty){
             console.log('no Records');
               $('.reportErrorMessage').removeClass('hide');
+              $('.with-header').addClass('hide');
           }
         snapshot.docChanges.forEach(function(change) {
-                  $('.with-header').removeClass('hide');
+            $('.with-header').removeClass('hide');
+            $('.reportErrorMessage').addClass('hide');
           if (change.type === "added") {
                 $('.reportDate').html(date);
                 $('.reportTimeIn1').text(change.doc.data().timeIn1);
