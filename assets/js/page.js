@@ -23,7 +23,6 @@ $(".button-collapse").sideNav();
     $('select').material_select();
     $('#reportCaresModal').modal({
         complete: function() { 
-            alert('Closed'); 
             $('#reportEmail').val('');
             $('#reportDate').val('');
             $('.reportErrorMessage').addClass('hide');
@@ -738,6 +737,7 @@ function getReportByDate(date){
             console.log('no Records');
               $('.reportErrorMessage').removeClass('hide');
               $('.with-header').addClass('hide');
+              $('.reportPrintBtn').addClass('disabled');
           }
         snapshot.docChanges.forEach(function(change) {
             $('.with-header').removeClass('hide');
