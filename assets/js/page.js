@@ -39,7 +39,7 @@ var user = firebase.auth().currentUser;
         });
 
     } else {
-      window.location.replace(".html");
+      window.location.replace("./");
     }
 // });
 
