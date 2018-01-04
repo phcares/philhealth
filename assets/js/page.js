@@ -12,7 +12,8 @@ $(".button-collapse").sideNav();
         today: 'Today',
         clear: 'Clear',
         close: 'Ok',
-        closeOnSelect: false // Close upon selecting a date,
+        closeOnSelect: false, // Close upon selecting a date,
+        formatSubmit: 'dd/mm/yyyy',
       });
     $('.modal').modal();
     $('select').material_select();
