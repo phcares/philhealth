@@ -726,7 +726,7 @@ function getReportByDate(date){
     .onSnapshot(function(snapshot) {
           if(snapshot.empty){
             console.log('no Records');
-              $('.reportErrorMessage').removeClass('hide);
+              $('.reportErrorMessage').removeClass('hide');
           }
         snapshot.docChanges.forEach(function(change) {
                   $('.with-header).removeClass('hide');
