@@ -15,7 +15,8 @@ $(".button-collapse").sideNav();
         closeOnSelect: false, // Close upon selecting a date,
         formatSubmit: 'dd/mm/yyyy',
         onClose: function() {
-            console.log(this.get('select', 'd-m-yyyy'));
+            var x = this.get('select', 'd-m-yyyy');
+            getReportByDate(x);
         }
       });
     $('.modal').modal();
@@ -716,3 +717,39 @@ $(document).on('click', '#reportCaresModalBtn', function (event) {
   $('.reportCaresName').text(name);
   $('#reportEmail').val(email);
 });
+
+function getReportByDate(date){
+  var email = $('#reportEmail').val();
+
+  var docRef = db.collection('timeRecords');
+  docRef.where("user_email", "==", email).where("date", "==", date)
+    .onSnapshot(function(snapshot) {
+          if(snapshot.empty){
+            console.log('no Records');
+              $('.reportErrorMessage').removeClass('hide);
+          }
+        snapshot.docChanges.forEach(function(change) {
+                  $('.with-header).removeClass('hide');
+          if (change.type === "added") {
+                $('.reportDate').html(date);
+                $('.reportTimeIn1').text(change.doc.data().timeIn1);
+                $('.reportTimeOut1').text(change.doc.data().timeOut1);
+                $('.reportTimeIn2').text(change.doc.data().timeIn2);
+                $('.reportTimeOut2').text(change.doc.data().timeOut2);
+                $('.reportOverTimeIn').text(change.doc.data().otTimeIn);
+                $('.reportOverTimeOut').text(change.doc.data().otTimeOut);
+                $('.reportPlace').text(change.doc.data().location);
+            }
+            if (change.type === "modified") {
+                $('.reportDate').html(date);
+                $('.reportTimeIn1').text(change.doc.data().timeIn1);
+                $('.reportTimeOut1').text(change.doc.data().timeOut1);
+                $('.reportTimeIn2').text(change.doc.data().timeIn2);
+                $('.reportTimeOut2').text(change.doc.data().timeOut2);
+                $('.reportOverTimeIn').text(change.doc.data().otTimeIn);
+                $('.reportOverTimeOut').text(change.doc.data().otTimeOut);
+                $('.reportPlace').text(change.doc.data().location);
+            }
+        });
+    }); 
+}
