@@ -17,7 +17,7 @@ $(".button-collapse").sideNav();
 firebase.firestore().enablePersistence();
 var db = firebase.firestore();
 var logs = db.collection('logs');
-// firebase.auth().onAuthStateChanged(function(user) {
+firebase.auth().onAuthStateChanged(function(user) {
 var user = firebase.auth().currentUser;
     if (user) {
        var user_email = user.email;
@@ -41,7 +41,7 @@ var user = firebase.auth().currentUser;
     } else {
       window.location.replace("./");
     }
-// });
+});
 
 
 $(".signOutBtn").click(function(){
