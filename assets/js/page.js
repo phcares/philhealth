@@ -734,7 +734,6 @@ function getReportByDate(date){
   docRef.where("user_email", "==", email).where("date", "==", date)
     .onSnapshot(function(snapshot) {
           if(snapshot.empty){
-            console.log('no Records');
               $('.reportErrorMessage').removeClass('hide');
               $('.with-header').addClass('hide');
               $('.reportPrintBtn').addClass('disabled');
