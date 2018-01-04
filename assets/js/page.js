@@ -711,3 +711,8 @@ $(document).on('click', '#reportCaresModalBtn', function (event) {
   var key = $(this).attr("key");
   $('.reportCaresName').text(name);
 });
+
+$('#reportDate').on('input',function() {
+  var date = $(this).val();
+  alert(date);
+});
