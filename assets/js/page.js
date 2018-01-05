@@ -788,6 +788,6 @@ function checkEmpNo(emp_no){
 	 		$('#addErrorMsg').removeClass('hide');
 	 		$('#addErrorMsg').text('Employee Number has already been used. Please try again');
 	 	});
-	 }
+	 });
 
 }
