@@ -22,7 +22,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
     } else {
 }});
-
+$('.modal').modal();
 function loginUser(){
 	var email = $("#loginEmail").val();
     var password = $("#loginPassword").val();
@@ -50,3 +50,19 @@ $("form#loginForm").on("submit",function(event){
 	event.preventDefault();
 	loginUser();
 });
+
+$(document).on('click', '#forgotPassResetBtn', function (event) {
+  event.preventDefault();
+  var auth = firebase.auth();
+  var email = $('#forgotPassEmail').val();
+  auth.sendPasswordResetEmail(email).then(function() {
+	  // Email sent.
+	  Materialize.toast('Password Reset Link has been sent to your email address.', 5000);
+      $('#forgotPassModal').modal('close');
+	}).catch(function(error) {
+	  // An error happened.
+	  Materialize.toast('Oh No! An error occured. Please try again.', 5000);
+      $('#forgotPassModal').modal('close');
+	  console.log(error);
+	});
+}
