@@ -331,8 +331,12 @@ $(document).on('click', '.resetPassBtn', function (event) {
 
 	auth.sendPasswordResetEmail(emailAddress).then(function() {
 	  // Email sent.
+		Materialize.toast('An Email has been sent to user on how to reset his/her password.', 5000);
+        	$('#updateCaresModal').modal('close');
 	}).catch(function(error) {
 	  // An error happened.
+		Materialize.toast('An error occured. Please try again later.', 5000);
+        	$('#updateCaresModal').modal('close');
 	  console.log(error);
 	});
 });
