@@ -289,16 +289,6 @@ function validateEmail($email) {
   return emailReg.test( $email );
 }
 
-$('#caresPassword').on('input',function() { 
-  var password = $('#caresPassword').val();
-  if(password.length < 6){
-        $('#addCareErrorMsg').removeClass('hide');
-        $('#addCareErrorMsg').html('Password should be atleast 6 characters.');
-  }else{
-        $('#addCareErrorMsg').addClass('hide');
-  }
-});
-
 $('#caresEmail').on('input',function() {
   var email = $('#caresEmail').val();
 
@@ -309,21 +299,17 @@ $('#caresEmail').on('input',function() {
         $('#addCareErrorMsg').addClass('hide');
     }
 });
+$(document).on('click', '.resetPassBtn', function (event) {
+	var auth = firebase.auth();
+	var emailAddress = $('#caresEmail').val();
 
-$('#caresCPassword').on('input',function() {
-  var password = $('#caresPassword').val();
-  var cPassword = $('#caresCPassword').val();
-
-  if (password != cPassword) {
-        $('#addCareErrorMsg').removeClass('hide');
-        $('#addCareErrorMsg').html('Passwords do not match.');
-        $('.addCaresBtn').addClass('disabled');
-    } else {
-        $('#addCareErrorMsg').addClass('hide');
-        $('.addCaresBtn').removeClass('disabled');
-    }
+	auth.sendPasswordResetEmail(emailAddress).then(function() {
+	  // Email sent.
+	}).catch(function(error) {
+	  // An error happened.
+	  console.log(error);
+	});
 });
-
 $(document).on('click', '.addCaresBtn', function (event) {
   event.preventDefault();
   var emp_no = $('#caresEmployeeNumber').val();
