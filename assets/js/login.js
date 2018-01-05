@@ -65,4 +65,4 @@ $(document).on('click', '#forgotPassResetBtn', function (event) {
       $('#forgotPassModal').modal('close');
 	  console.log(error);
 	});
-}
+});
