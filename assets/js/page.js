@@ -772,3 +772,22 @@ function getReportByDate(date){
         });
     }); 
 }
+
+
+$('#adminEmployeeNumber').on('input',function() {
+  var emp_no = $(this).val();
+  checkEmpNo(emp_no);
+});
+function checkEmpNo(emp_no){
+	
+	 db.collection('users').where("emp_no", "==", emp_no).onSnapshot(function(snapshot) {
+	 		if(snapshot.empty){
+		 		$('#addErrorMsg').addClass('hide');
+	 		}
+	 	snapshot.docChanges.forEach(function(change){
+	 		$('#addErrorMsg').removeClass('hide');
+	 		$('#addErrorMsg').text('Employee Number has already been used. Please try again');
+	 	});
+	 }
+
+}
