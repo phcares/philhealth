@@ -299,6 +299,32 @@ $('#caresEmail').on('input',function() {
         $('#addCareErrorMsg').addClass('hide');
     }
 });
+
+$('#caresPassword').on('input',function() { 
+  var password = $('#caresPassword').val();
+  if(password.length < 6){
+        $('#addCareErrorMsg').removeClass('hide');
+        $('#addCareErrorMsg').html('Password should be atleast 6 characters.');
+  }else{
+        $('#addCareErrorMsg').addClass('hide');
+  }
+});
+
+$('#caresCPassword').on('input',function() {
+  var password = $('#caresPassword').val();
+  var cPassword = $('#caresCPassword').val();
+
+  if (password != cPassword) {
+        $('#addCareErrorMsg').removeClass('hide');
+        $('#addCareErrorMsg').html('Passwords do not match.');
+        $('.addCaresBtn').addClass('disabled');
+    } else {
+        $('#addCareErrorMsg').addClass('hide');
+        $('.addCaresBtn').removeClass('disabled');
+    }
+});
+
+
 $(document).on('click', '.resetPassBtn', function (event) {
 	var auth = firebase.auth();
 	var emailAddress = $('#caresEmail').val();
@@ -378,29 +404,29 @@ $(document).on('click', '#updateCaresModalBtn', function (event) {
   });
 });
 
-$('#updateCaresPassword').on('input',function() { 
-  var password = $('#updateCaresPassword').val();
-  if(password.length < 6){
-        $('#updateCaresErrorMsg').removeClass('hide');
-        $('#updateCaresErrorMsg').html('Password should be atleast 6 characters.');
-  }else{
-        $('#updateCaresErrorMsg').addClass('hide');
-  }
-});
+// $('#updateCaresPassword').on('input',function() { 
+//   var password = $('#updateCaresPassword').val();
+//   if(password.length < 6){
+//         $('#updateCaresErrorMsg').removeClass('hide');
+//         $('#updateCaresErrorMsg').html('Password should be atleast 6 characters.');
+//   }else{
+//         $('#updateCaresErrorMsg').addClass('hide');
+//   }
+// });
 
-$('#updateCaresCPassword').on('input',function() {
-  var password = $('#updateCaresPassword').val();
-  var cPassword = $('#updateCaresCPassword').val();
+// $('#updateCaresCPassword').on('input',function() {
+//   var password = $('#updateCaresPassword').val();
+//   var cPassword = $('#updateCaresCPassword').val();
 
-  if (password != cPassword) {
-        $('#updateCaresErrorMsg').removeClass('hide');
-        $('#updateCaresErrorMsg').html('Passwords do not match.');
-        $('.updateCaresBtn').addClass('disabled');
-    } else {
-        $('#updateCaresErrorMsg').addClass('hide');
-        $('.updateCaresBtn').removeClass('disabled');
-    }
-});
+//   if (password != cPassword) {
+//         $('#updateCaresErrorMsg').removeClass('hide');
+//         $('#updateCaresErrorMsg').html('Passwords do not match.');
+//         $('.updateCaresBtn').addClass('disabled');
+//     } else {
+//         $('#updateCaresErrorMsg').addClass('hide');
+//         $('.updateCaresBtn').removeClass('disabled');
+//     }
+// });
 
 $(document).on('click', '.updateCaresBtn', function (event) {
   event.preventDefault();
