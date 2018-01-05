@@ -7,7 +7,7 @@ firebase.auth().onAuthStateChanged(function(user) {
       	 users.where("email", "==", user.email).where("account_type", "==", "Admin").get().then(function(querySnapshot){
 			if(querySnapshot.empty){
 				$('#loginError').removeClass('hide');
-        		$('#loginError').text('Username is not registered. Please try again.');	
+        		$('#loginError').text('Invalid Email Address. Please try again.');	
         		$("#loginBtn").show();
     			$('#loginProgress').addClass('hide');
 				
