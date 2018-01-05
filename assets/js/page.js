@@ -327,7 +327,7 @@ $('#caresCPassword').on('input',function() {
 
 $(document).on('click', '.resetPassBtn', function (event) {
 	var auth = firebase.auth();
-	var emailAddress = $('#caresEmail').val();
+	var emailAddress = $('#updateCaresEmail').val();
 
 	auth.sendPasswordResetEmail(emailAddress).then(function() {
 	  // Email sent.
