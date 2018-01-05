@@ -94,7 +94,8 @@
 					        </div>
 					        <div class="input-field col s12">
 					          <span id="loginError" class="red-text hide">Invalid Username or password</span>
-					        </div>
+					        	<p><a href="#forgotPassModal" class="modal-trigger forgotPassModal">Forgot Password?</a></p>
+						 </div>
 					        <div class="input-field col s12 m12 l12">
 					          <button class="btn waves-light waves-effect right green" id="loginBtn">
 					          <i class="material-icons right">send</i>
@@ -113,7 +114,17 @@
 				<div class="col m1 l2"></div>
 		      </div>
 		</div>
-		
+		<div id="forgotPassModal" class="modal">
+			<div class="modal-content">
+				<p class="flow-text">Enter Email Address</p>
+				<div class="col s12 input-field">
+					<input type="email" name="" id="forgotPassEmail" class="validate">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn green right" id="forgotPassResetBtn">Reset</button>
+			</div>
+		</div>
 		
 
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
