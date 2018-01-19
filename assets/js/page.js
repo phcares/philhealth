@@ -774,6 +774,7 @@ function getReportByDate(date){
                 $('.reportOverTimeIn').text(change.doc.data().otTimeIn);
                 $('.reportOverTimeOut').text(change.doc.data().otTimeOut);
                 $('.reportPlace').text(change.doc.data().location);
+		  isReportLate();
             }
             if (change.type === "modified") {
                 $('.reportDate').html(date);
@@ -784,6 +785,7 @@ function getReportByDate(date){
                 $('.reportOverTimeIn').text(change.doc.data().otTimeIn);
                 $('.reportOverTimeOut').text(change.doc.data().otTimeOut);
                 $('.reportPlace').text(change.doc.data().location);
+		    isReportLate();
             }
         });
     }); 
@@ -806,4 +808,25 @@ function checkEmpNo(emp_no){
 	 	});
 	 });
 
+}
+
+function isReportLate(){
+	var value = $('.reportTimeIn1').text();
+	var x = "8:00:00";
+	var z = "6:00:00";
+	var late  = "8:15:00";
+	var allowable = "23:00:00";
+	if(value > x || value < z){
+			$('.reportTimeInIndicator').removeClass('red');
+			$('.reportTimeInIndicator').removeClass('white-text');
+		if(value > late){
+			console.log('late');
+			$('.reportTimeInIndicator').addClass('red');
+			$('.reportTimeInIndicator').addClass('white-text');
+		}
+	}
+	if(value > late || value < allowable){
+		$('.reportTimeInIndicator').addClass('red');
+		$('.reportTimeInIndicator').addClass('white-text');
+	}
 }
